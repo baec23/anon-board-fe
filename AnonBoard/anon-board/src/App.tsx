@@ -13,7 +13,7 @@ function App() {
 
     useEffect(() => {
         let eventSource = new EventSource(
-            'http://localhost:8080/anon-board-api/v1/post'
+            'http://anon-board.baec23.com:8080/anon-board-api/v1/post'
         );
         setEventSourceHasError(false);
         eventSource.onerror = () => {
@@ -23,12 +23,11 @@ function App() {
         eventSource.onmessage = (e) => {
             setPosts(JSON.parse(e.data));
         };
-        console.log('Event source status = ' + eventSourceHasError);
     }, [eventSourceHasError]);
 
     return (
         <div className="w-full flex justify-center">
-            <div className="w-full mx-20 my-20 max-w-4xl min-w-fit">
+            <div className="w-full max-w-4xl min-w-fit mx-5 my-5 md:mx-10 md:my-16">
                 {!isLoggedIn && (
                     <LoginPage
                         onChooseUsername={(username) => {

@@ -5,6 +5,4 @@ export type Post = {
     createdTimestamp: number;
     parentId: string;
     childIds: string[];
-    nestingLevel: number;
-    isExpanded: boolean;
 };
