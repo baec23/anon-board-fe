@@ -7,7 +7,7 @@ export type AppState = {
     loggedInUserDisplayName: string;
     isLoggedIn: boolean;
 };
-export const useAppState = () => {
+export const useApp = () => {
     const posts = usePosts();
     const [appState, setAppState] = useState<AppState>({
         posts: [],
@@ -38,5 +38,5 @@ export const useAppState = () => {
         });
     }, [posts]);
 
-    return [appState, login, logout] as const;
+    return { appState, login, logout };
 };

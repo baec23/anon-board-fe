@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Post } from '../../model/Post';
+import { Post } from '../../../model/Post';
 import {
     ArrowDownCircleIcon,
     ArrowUpCircleIcon,
@@ -28,13 +28,13 @@ const PostCard = ({
         <>
             <div className="rounded-t shadow p-5 bg-gray-200 flex flex-col mt-5">
                 <div className="w-full flex flex-row mb-2">
-                    <span className="w-fit whitespace-nowrap">
+                    <span className="whitespace-nowrap">
                         {post.userDisplayName}
                     </span>
                     <div className="w-full flex justify-end">
                         <span className="w-fit flex justify-evenly gap-5">
                             <ArrowUpCircleIcon
-                                className="w-7 hover:text-green-400 active:text-blue-500"
+                                className="w-7 transition duration-75 ease-in-out hover:scale-125"
                                 onClick={(event) => {
                                     onUpvote(post.id);
                                     event.stopPropagation();

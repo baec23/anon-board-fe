@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import LabelledTextArea from '../../components/LabelledTextArea';
-import AnonBoardButton from '../../components/AnonBoardButton';
+import LabelledTextArea from '../../../components/LabelledTextArea';
+import AnonBoardButton from '../../../components/AnonBoardButton';
 
 type CreatePostFormProps = {
     onSubmit: (message: string) => void;

@@ -1,28 +1,31 @@
-import MessageBoardPage from './pages/MessageBoardPage';
+import MessageBoardPage from './pages/messageboard/MessageBoardPage';
 import React from 'react';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/login/LoginPage';
 import { AppStateContext } from './contexts/AppStateContext';
-import { useAppState } from './hooks/useAppState';
+import { useApp } from './hooks/useApp';
+import { TopBar } from './components/TopBar';
 
 function App() {
-    const [appState, login, logout] = useAppState();
+    const app = useApp();
+    const appState = app.appState;
     return (
-        <div className="w-full flex justify-center">
-            <div className="w-full max-w-4xl min-w-fit mx-5 my-5 md:mx-10 md:my-16">
-                {!appState.isLoggedIn && (
-                    <LoginPage
-                        onChooseUsername={(username) => {
-                            login(username);
-                        }}
-                    />
-                )}
-                {appState.isLoggedIn && (
-                    <AppStateContext.Provider value={appState}>
-                        <MessageBoardPage onLogout={logout} />
-                    </AppStateContext.Provider>
-                )}
+        <AppStateContext.Provider value={appState}>
+            <div className="w-full p-5 flex flex-col items-center">
+                <div className="w-full flex flex-col max-w-4xl items-center">
+                    <TopBar onLogout={app.logout} onToggleLanguage={() => {}} />
+                    {!appState.isLoggedIn && (
+                        <LoginPage
+                            onChooseUsername={(username) => {
+                                app.login(username);
+                            }}
+                        />
+                    )}
+                    {appState.isLoggedIn && (
+                        <MessageBoardPage onLogout={app.logout} />
+                    )}
+                </div>
             </div>
-        </div>
+        </AppStateContext.Provider>
     );
 }
 

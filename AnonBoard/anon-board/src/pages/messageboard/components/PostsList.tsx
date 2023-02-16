@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PostCard from './PostCard';
-import { AppStateContext } from '../../contexts/AppStateContext';
+import { AppStateContext } from '../../../contexts/AppStateContext';
 
 type PostsListProps = {
     onAddReply: (message: string, parentId?: string) => void;

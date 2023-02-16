@@ -1,8 +1,8 @@
 import { createContext } from 'react';
-import { AppState } from '../hooks/useAppState';
+import { AppState } from '../hooks/useApp';
 
 export const AppStateContext = createContext<AppState>({
     posts: [],
-    loggedInUserDisplayName: undefined,
+    loggedInUserDisplayName: '',
     isLoggedIn: false
 });
