@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PostCard from './PostCard';
-import { PostsContext } from '../../contexts/PostsContext';
+import { AppStateContext } from '../../contexts/AppStateContext';
 
 type PostsListProps = {
     onAddReply: (message: string, parentId?: string) => void;
@@ -14,8 +14,8 @@ const PostsList = ({
     onUpvote,
     onDownvote
 }: PostsListProps) => {
-    const allPosts = useContext(PostsContext);
-    let displayedPosts = allPosts
+    const appState = useContext(AppStateContext);
+    let displayedPosts = appState.posts
         .filter((post) => post.parentId == parentId)
         .sort((a, b) => {
             return b.createdTimestamp - a.createdTimestamp;

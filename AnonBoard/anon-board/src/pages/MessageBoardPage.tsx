@@ -1,58 +1,31 @@
-import React, { useContext, useState } from 'react';
-import { Post } from '../model/Post';
+import React from 'react';
 import PostsList from './components/PostsList';
 import { CreatePostForm } from './components/CreatePostForm';
 import AnonBoardButton from '../components/AnonBoardButton';
-import { createPost } from '../services/PostsApi';
-import { UserContext } from '../contexts/UserContext';
+import { useMessageBoardPage } from './useMessageBoardPage';
 
 type MessageBoardPageProps = {
     onLogout: () => void;
 };
 const MessageBoardPage = ({ onLogout }: MessageBoardPageProps) => {
-    const [isCreatingNewPost, setIsCreatingNewPost] = useState(false);
-    const username = useContext(UserContext);
-    const handleCreatePost = (
-        message: string,
-        parentId?: string,
-        onComplete?: (post: Post) => void
-    ) => {
-        createPost({
-            userDisplayName: username,
-            message: message,
-            parentId: parentId
-        }).then((result) => {
-            if (onComplete) onComplete(result);
-            return result;
-        });
-    };
-    const handleUpvote = (
-        postId: string,
-        onComplete?: (post: Post) => void
-    ) => {};
-    const handleDownvote = (
-        postId: string,
-        onComplete?: (post: Post) => void
-    ) => {};
+    const messageBoard = useMessageBoardPage();
 
     return (
         <div className="w-auto">
             <div className="w-full flex justify-between">
                 <AnonBoardButton
                     text="Create New Post"
-                    onClick={() => setIsCreatingNewPost(!isCreatingNewPost)}
+                    onClick={() => messageBoard.toggleCreatePostForm()}
                 />
                 <AnonBoardButton text="Logout" onClick={onLogout} />
             </div>
-            {isCreatingNewPost && (
+            {messageBoard.isCreatingNewPost && (
                 <div className="w-full flex justify-center mt-5">
                     <CreatePostForm
                         onSubmit={(message) =>
-                            handleCreatePost(message, undefined, (post) => {
-                                setIsCreatingNewPost(false);
-                            })
+                            messageBoard.handleCreatePost(message)
                         }
-                        onCancel={() => setIsCreatingNewPost(false)}
+                        onCancel={() => messageBoard.toggleCreatePostForm()}
                     />
                 </div>
             )}
