@@ -18,37 +18,29 @@ const PostCard = ({ post, onAddReply }: PostCardProps) => {
 
     return (
         <>
-            <div className="rounded-t shadow p-5 bg-gray-200 flex flex-col mt-5">
-                <div className="w-full flex flex-row mb-2">
-                    <span className="whitespace-nowrap">
-                        {post.userDisplayName}
-                    </span>
-                    <div className="w-full flex justify-end">
-                        <span className="w-fit flex justify-evenly gap-5">
-                            <IconButton
-                                icon={
-                                    <PencilSquareIcon
-                                        title={
-                                            stringStore.messageBoard_tt_reply
-                                        }
-                                    />
-                                }
-                                size="w-8"
-                                color="text-black"
-                                hoverColor="text-blue-500"
-                                activeColor="text-blue-700"
-                                onClick={() => {
-                                    setIsReplying(true);
-                                }}
-                            />
-                        </span>
+            <div className="shadow px-4 py-3 bg-gray-50 flex flex-col">
+                <div className="flex flex-row">
+                    <div className="flex-col flex-1">
+                        <h3 className="text-neutral-standard text-sm">
+                            {post.userDisplayName}
+                        </h3>
+                        <h1 className="text-lg whitespace-pre-wrap">
+                            {post.message}
+                        </h1>
+                    </div>
+                    <div className="self-center">
+                        <IconButton
+                            icon={
+                                <PencilSquareIcon
+                                    title={stringStore.messageBoard_tt_reply}
+                                />
+                            }
+                            onClick={() => {
+                                setIsReplying(!isReplying);
+                            }}
+                        />
                     </div>
                 </div>
-
-                <p className="text-xl whitespace-pre-wrap mx-5">
-                    {post.message}
-                </p>
-
                 {isReplying && (
                     <CreatePostForm
                         onSubmit={(message) => {
@@ -66,27 +58,27 @@ const PostCard = ({ post, onAddReply }: PostCardProps) => {
             </div>
             {!isExpanded && numChildren > 0 && (
                 <div
-                    className="rounded-b p-2 px-5 shadow bg-gray-300 flex justify-end items-center hover:bg-blue-100"
+                    className="rounded-b p-2 px-5 shadow bg-neutral-200 flex justify-end items-center hover:bg-secondary-light"
                     onClick={() => {
                         setIsExpanded(!isExpanded);
                     }}
                 >
-                    <span className="text-black text-lg">
+                    <span className="text-neutral-dark text-md">
                         {stringStore.messageBoard_txt_seeMore}
                     </span>
-                    <span className="inline-flex items-center justify-center ml-5 w-5 h-5 p-3 text-xl font-bold text-black bg-blue-400 rounded">
+                    <span className="inline-flex items-center justify-center ml-5 w-5 h-5 p-3 text-sm font-bold text-white bg-secondary-standard rounded">
                         {numChildren}
                     </span>
                 </div>
             )}
             {isExpanded && numChildren > 0 && (
                 <div
-                    className="rounded-b p-2 px-5 shadow bg-gray-300 flex justify-end items-center hover:bg-blue-100"
+                    className="rounded-b p-2 px-5 shadow bg-neutral-200 flex justify-end items-center hover:bg-secondary-light"
                     onClick={() => {
                         setIsExpanded(!isExpanded);
                     }}
                 >
-                    <span className="text-black text-lg">
+                    <span className="text-neutral-dark text-md">
                         {stringStore.messageBoard_txt_seeLess}
                     </span>
                 </div>

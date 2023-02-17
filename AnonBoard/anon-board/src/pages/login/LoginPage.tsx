@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import LabelledInputField from '../../components/LabelledInputField';
-import AnonBoardButton from '../../components/AnonBoardButton';
 import { useLogin } from './useLogin';
 import { AnimatedVisibilityComponent } from '../../components/AnimatedVisibilityComponent';
 
@@ -15,7 +14,7 @@ const LoginPage = ({ onChooseUsername }: LoginPageProps) => {
             <AnimatedVisibilityComponent
                 visibilityState={login.errorVisibility}
             >
-                <div className="flex justify-end mb-2 text-red-500">
+                <div className="flex justify-end mb-2 text-error">
                     <h1>{login.errorMessage}</h1>
                 </div>
             </AnimatedVisibilityComponent>
@@ -23,7 +22,7 @@ const LoginPage = ({ onChooseUsername }: LoginPageProps) => {
     }, [login.errorMessage]);
 
     return (
-        <div className="w-full rounded shadow p-5 bg-blue-100 flex flex-col">
+        <div className="w-full p-5 flex flex-col justify-end">
             <LabelledInputField
                 id="username"
                 labelText={login.stringStore.login_lbl_username}
@@ -32,11 +31,13 @@ const LoginPage = ({ onChooseUsername }: LoginPageProps) => {
                 onInput={(e) => login.setUsername(e.currentTarget.value)}
             />
             <div className="mt-1 mb-2">{errorMessage()}</div>
-            <AnonBoardButton
-                text={login.stringStore.btn_confirm}
+            <button
+                className="anon-button-animated self-end"
+                disabled={!login.isFormValid}
                 onClick={() => onChooseUsername(login.username)}
-                enabled={login.isFormValid}
-            />
+            >
+                {login.stringStore.btn_confirm}
+            </button>
         </div>
     );
 };

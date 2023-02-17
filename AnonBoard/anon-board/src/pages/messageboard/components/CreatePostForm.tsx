@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import LabelledTextArea from '../../../components/LabelledTextArea';
-import AnonBoardButton from '../../../components/AnonBoardButton';
 
 type CreatePostFormProps = {
     onSubmit: (message: string) => void;
@@ -21,9 +20,9 @@ export const CreatePostForm = ({
     const [message, setMessage] = useState('');
 
     return (
-        <div className="w-full flex justify-center">
+        <div className="flex justify-center">
             <form
-                className="w-full rounded shadow p-5 bg-blue-100 flex flex-col"
+                className="p-5 flex flex-col"
                 onSubmit={(e) => {
                     e.preventDefault();
                     onSubmit(message);
@@ -37,19 +36,16 @@ export const CreatePostForm = ({
                     onInput={(e) => setMessage(e.currentTarget.value)}
                 />
                 <span className="flex justify-center mt-5 gap-20">
-                    <AnonBoardButton
-                        text={affirmativeButtonText}
+                    <button
+                        className="anon-button-animated"
                         type="submit"
-                        ariaLabel="Create New Post"
-                        color="blue-500"
-                        activeColor="blue-700"
-                    />
-                    <AnonBoardButton
-                        text={cancelButtonText}
-                        onClick={() => onCancel()}
-                        color="blue-500"
-                        activeColor="blue-700"
-                    />
+                        aria-label="Create New Post"
+                    >
+                        {affirmativeButtonText}
+                    </button>
+                    <button className="anon-button-animated" onClick={onCancel}>
+                        {cancelButtonText}
+                    </button>
                 </span>
             </form>
         </div>

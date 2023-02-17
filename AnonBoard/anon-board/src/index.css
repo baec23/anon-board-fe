@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.anon-button-base {
+    @apply w-36 h-10 rounded bg-transparent antialiased border-2 border-neutral-standard text-neutral-dark enabled:hover:bg-primary-standard enabled:hover:border-transparent enabled:hover:text-on-primary disabled:opacity-50 disabled:bg-neutral-100 disabled:border disabled:border-disabled disabled:text-disabled disabled:shadow-transparent
+}
+
+.anon-button-animated {
+    @apply anon-button-base transition-all duration-75 enabled:active:scale-95
+}
+
+.anon-icon-button-animated {
+    @apply w-10 text-neutral-dark scale-90 duration-[50] hover:text-primary-standard hover:scale-100 hover:drop-shadow-sm active:text-primary-standard active:scale-95 active:drop-shadow-none
+}
+
+.anon-input-field {
+    @apply block w-full mt-1 p-2 text-black rounded border border-neutral-200 hover:border-neutral-standard focus:outline-neutral-dark transition-all duration-150
+}
+
+/*"block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 whitespace-pre-wrap"*/

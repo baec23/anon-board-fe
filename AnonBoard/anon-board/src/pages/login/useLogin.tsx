@@ -9,13 +9,11 @@ export const useLogin = () => {
     const stringStore = useContext(StringStoreContext);
 
     const errorMessage = useMemo(() => {
-        console.log('ERROr MESSAGe updATED');
         if (hasError) return stringStore.txt_alphaNumericError;
         else return '';
     }, [hasError]);
 
     const errorVisibility = useMemo<'init' | 'visible' | 'invisible'>(() => {
-        console.log('error visibility updated');
         if (hasError) return 'visible';
         else return 'invisible';
     }, [hasError]);

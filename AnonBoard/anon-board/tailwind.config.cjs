@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
     content: [
         "./index.html",
@@ -6,6 +8,29 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                primary: {
+                    standard: '#ff7723'
+                },
+                secondary: {
+                    standard: '#4488ff',
+                    light: '#e5efff'
+                },
+                neutral: {
+                    standard: '#8d8d8d',
+                    dark: '#606060'
+                },
+                disabled: '#a9a9a9',
+                error: '#c1121f',
+                on: {
+                    primary: '#ffffff',
+                    secondary: '#ffffff',
+                    container: '#ffffff'
+                }
+            },
+            fontFamily: {
+                'sans': ['Noto Sans KR', ...defaultTheme.fontFamily.sans]
+            },
             transitionProperty: {
                 height: 'height',
                 maxHeight: 'max-height'

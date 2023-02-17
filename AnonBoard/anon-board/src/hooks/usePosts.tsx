@@ -15,7 +15,7 @@ export const usePosts = () => {
             setEventSourceHasError(true);
         };
         eventSource.onmessage = (e) => {
-            console.log('Event source got new message');
+            console.log('SSE Message Received');
             setPosts(JSON.parse(e.data));
         };
         return () => {

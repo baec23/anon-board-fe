@@ -24,7 +24,7 @@ const LabelledTextArea = ({
         <div>
             <label
                 htmlFor={id}
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block text-sm font-medium text-neutral-dark"
             >
                 {labelText}
             </label>
@@ -32,7 +32,7 @@ const LabelledTextArea = ({
                 inputMode="text"
                 id={id}
                 rows={numRows}
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 whitespace-pre-wrap"
+                className="anon-input-field whitespace-pre-wrap"
                 value={value}
                 required={required}
                 title={stringStore.tt_requiredForm}

@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import { AppStateContext } from '../contexts/AppStateContext';
 import { IconButton } from './IconButton';
-import { LanguageIcon, UserMinusIcon } from '@heroicons/react/24/outline';
+import {
+    Cog6ToothIcon,
+    LanguageIcon,
+    UserMinusIcon
+} from '@heroicons/react/24/outline';
 import { StringStoreContext } from '../contexts/StringStoreContext';
 
 type TopBarProps = {
@@ -11,55 +15,33 @@ type TopBarProps = {
 export const TopBar = ({ onLogout, onToggleLanguage }: TopBarProps) => {
     const appState = useContext(AppStateContext);
     const stringStore = useContext(StringStoreContext);
-    const isLoggedInElementsVisible = appState.isLoggedIn
-        ? 'visible'
-        : 'invisible';
-
-    const LoggedInElements = () => {
-        return (
-            <div
-                className={`flex flex-row flex-1 items-baseline ml-2 mr-5 ${isLoggedInElementsVisible}`}
-            >
-                <div className="flex flex-row items-baseline">
-                    <span className="text-black">
-                        {stringStore.topBar_txt_welcome}
-                    </span>
-                    <span className="w-1" />
-                    <span className="text-xl text-black">
-                        {appState.loggedInUserDisplayName}
-                    </span>
-                </div>
-                <div className="flex flex-1" />
-                <LoggedInButtons />
-            </div>
-        );
-    };
-    const LoggedInButtons = () => {
-        return (
-            <IconButton
-                icon={<UserMinusIcon title={stringStore.topBar_tt_logout} />}
-                size="w-8"
-                color="text-black"
-                hoverColor="text-blue-500"
-                activeColor="text-blue-700"
-                onClick={onLogout}
-            />
-        );
-    };
-
     const ControlButtons = () => {
         return (
-            <div className="flex flex-row flex-nowrap">
+            <div className="flex flex-row flex-nowrap gap-2">
+                {appState.isLoggedIn && (
+                    <>
+                        <IconButton
+                            icon={<Cog6ToothIcon title={'WIP'} />}
+                            onClick={() => {
+                                alert('Not Implemented');
+                            }}
+                        />
+                        <IconButton
+                            icon={
+                                <UserMinusIcon
+                                    title={stringStore.topBar_tt_logout}
+                                />
+                            }
+                            onClick={onLogout}
+                        />
+                    </>
+                )}
                 <IconButton
                     icon={
                         <LanguageIcon
                             title={stringStore.topBar_tt_changeLanguage}
                         />
                     }
-                    size="w-8"
-                    color="text-black"
-                    hoverColor="text-blue-500"
-                    activeColor="text-blue-700"
                     onClick={onToggleLanguage}
                 />
             </div>
@@ -67,9 +49,32 @@ export const TopBar = ({ onLogout, onToggleLanguage }: TopBarProps) => {
     };
 
     return (
-        <div className="w-full flex flex-row py-5 items-baseline">
-            <h1 className="text-3xl text-blue-500 font-semibold">AnonBoard</h1>
-            <LoggedInElements />
+        <div className="w-full flex flex-row pb-5 mb-5">
+            <div className="flex flex-col">
+                <div className="flex flex-row gap-1 items-end">
+                    <div className="flex flex-col items-end gap-2">
+                        <h1 className="text-primary-standard font-bold text-5xl">
+                            Anon
+                        </h1>
+                        {appState.isLoggedIn && (
+                            <h3 className="text-neutral-standard ">
+                                {stringStore.topBar_txt_welcome}
+                            </h3>
+                        )}
+                    </div>
+                    <div className="flex flex-col items-start">
+                        <h1 className="text-neutral-standard text-5xl">
+                            Board
+                        </h1>
+                        {appState.isLoggedIn && (
+                            <h3 className="text-2xl text-primary-standard font-bold">
+                                {appState.loggedInUserDisplayName}
+                            </h3>
+                        )}
+                    </div>
+                </div>
+            </div>
+            <div className="flex-1" />
             <ControlButtons />
         </div>
     );

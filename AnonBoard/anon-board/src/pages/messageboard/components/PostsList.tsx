@@ -16,7 +16,7 @@ const PostsList = ({ parentId, onAddReply }: PostsListProps) => {
 
     return (
         <div>
-            <ul>
+            <ul className="flex flex-col mt-4 gap-4">
                 {displayedPosts.map((post) => {
                     return (
                         <li key={post.id}>

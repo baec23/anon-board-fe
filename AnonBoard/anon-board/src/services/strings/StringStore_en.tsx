@@ -8,7 +8,7 @@ export const StringStore_en: StringStore = {
     tt_requiredForm: 'Please fill out this field',
     txt_alphaNumericError: 'Only numbers and letters are allowed',
     login_lbl_username: 'Username',
-    login_ph_username: 'Choose a username',
+    login_ph_username: 'Who are you...?',
     messageBoard_btn_createNewPost: 'New Post',
     messageBoard_lbl_createNewPost: 'Create a new post',
     messageBoard_ph_createNewPost: 'Write your message here...',
@@ -19,5 +19,5 @@ export const StringStore_en: StringStore = {
     messageBoard_tt_reply: 'Reply',
     topBar_tt_changeLanguage: 'To Korean',
     topBar_tt_logout: 'Logout',
-    topBar_txt_welcome: 'Welcome,'
+    topBar_txt_welcome: 'Welcome'
 };
