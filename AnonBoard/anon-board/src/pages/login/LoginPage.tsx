@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import LabelledInputField from '../../components/LabelledInputField';
 import AnonBoardButton from '../../components/AnonBoardButton';
 import { useLogin } from './useLogin';
@@ -9,17 +9,18 @@ type LoginPageProps = {
 };
 const LoginPage = ({ onChooseUsername }: LoginPageProps) => {
     const login = useLogin();
-    const ErrorMessage = () => {
+
+    const errorMessage = useCallback(() => {
         return (
             <AnimatedVisibilityComponent
-                isVisible={login.errorMessage.length > 0}
+                visibilityState={login.errorVisibility}
             >
                 <div className="flex justify-end mb-2 text-red-500">
                     <h1>{login.errorMessage}</h1>
                 </div>
             </AnimatedVisibilityComponent>
         );
-    };
+    }, [login.errorMessage]);
 
     return (
         <div className="w-full rounded shadow p-5 bg-blue-100 flex flex-col">
@@ -30,7 +31,7 @@ const LoginPage = ({ onChooseUsername }: LoginPageProps) => {
                 placeholder={login.stringStore.login_ph_username}
                 onInput={(e) => login.setUsername(e.currentTarget.value)}
             />
-            <ErrorMessage />
+            <div className="mt-1 mb-2">{errorMessage()}</div>
             <AnonBoardButton
                 text={login.stringStore.btn_confirm}
                 onClick={() => onChooseUsername(login.username)}

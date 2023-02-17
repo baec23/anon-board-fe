@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 type AnimatedVisibilityComponentProps = {
     children?: React.ReactNode;
-    isVisible: boolean;
+    visibilityState: 'init' | 'visible' | 'invisible';
 };
 export const AnimatedVisibilityComponent = ({
     children,
-    isVisible
+    visibilityState
 }: AnimatedVisibilityComponentProps) => {
-    const animation = isVisible ? 'animate-scaleInY' : 'animate-scaleOutY';
-    const [isFirstRender, setIsFirstRender] = useState(true);
-
-    useEffect(() => {
-        setIsFirstRender(false);
-    }, []);
-
-    useEffect(() => {
-        console.log('First render? ' + isFirstRender);
-    }, [isFirstRender]);
+    let animation = '';
+    if (visibilityState === 'visible') animation = 'animate-scaleInY';
+    else if (visibilityState === 'invisible') animation = 'animate-scaleOutY';
 
     return (
         <div className="flex flex-col justify-center items-center">
-            {isFirstRender && <div className={`w-full`}>{children}</div>}
-            {!isFirstRender && (
-                <div className={`w-full ${animation}`}>{children}</div>
-            )}
+            <div className={`w-full ${animation}`}>{children}</div>
         </div>
     );
 };
