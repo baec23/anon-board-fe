@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseUrl = 'http://anon-board.baec23.com:8080/anon-board-api/v1';
+export const baseUrl = 'http://localhost:8080/anon-board-api/v1';
 
 const postsApi = axios.create({
     baseURL: baseUrl

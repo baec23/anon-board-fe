@@ -1,27 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Post } from '../../../model/Post';
-import {
-    ArrowDownCircleIcon,
-    ArrowUpCircleIcon,
-    PencilSquareIcon
-} from '@heroicons/react/24/outline';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import PostsList from './PostsList';
 import { CreatePostForm } from './CreatePostForm';
+import { StringStoreContext } from '../../../contexts/StringStoreContext';
+import { IconButton } from '../../../components/IconButton';
 
 type PostCardProps = {
     post: Post;
     onAddReply: (message: string, parentId?: string) => void;
-    onUpvote: (postId: string) => void;
-    onDownvote: (postId: string) => void;
 };
-const PostCard = ({
-    post,
-    onAddReply,
-    onUpvote,
-    onDownvote
-}: PostCardProps) => {
+const PostCard = ({ post, onAddReply }: PostCardProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
+    const stringStore = useContext(StringStoreContext);
     let numChildren = post.childIds.length;
 
     return (
@@ -33,25 +25,20 @@ const PostCard = ({
                     </span>
                     <div className="w-full flex justify-end">
                         <span className="w-fit flex justify-evenly gap-5">
-                            <ArrowUpCircleIcon
-                                className="w-7 transition duration-75 ease-in-out hover:scale-125"
-                                onClick={(event) => {
-                                    onUpvote(post.id);
-                                    event.stopPropagation();
-                                }}
-                            />
-                            <ArrowDownCircleIcon
-                                className="w-7 hover:text-red-400 active:text-blue-500"
-                                onClick={(event) => {
-                                    onDownvote(post.id);
-                                    event.stopPropagation();
-                                }}
-                            />
-                            <PencilSquareIcon
-                                className="w-7 hover:text-blue-700 active:text-blue-500"
-                                onClick={(event) => {
-                                    setIsReplying(!isReplying);
-                                    event.stopPropagation();
+                            <IconButton
+                                icon={
+                                    <PencilSquareIcon
+                                        title={
+                                            stringStore.messageBoard_tt_reply
+                                        }
+                                    />
+                                }
+                                size="w-8"
+                                color="text-black"
+                                hoverColor="text-blue-500"
+                                activeColor="text-blue-700"
+                                onClick={() => {
+                                    setIsReplying(true);
                                 }}
                             />
                         </span>
@@ -67,10 +54,13 @@ const PostCard = ({
                         onSubmit={(message) => {
                             onAddReply(message, post.id);
                             setIsReplying(false);
+                            setIsExpanded(true);
                         }}
                         onCancel={() => setIsReplying(false)}
-                        labelText="Add a reply"
-                        affirmativeButtonText="Reply"
+                        labelText={stringStore.messageBoard_lbl_addReply}
+                        placeholderText={stringStore.messageBoard_ph_addReply}
+                        affirmativeButtonText={stringStore.btn_addReply}
+                        cancelButtonText={stringStore.btn_cancel}
                     />
                 )}
             </div>
@@ -81,7 +71,9 @@ const PostCard = ({
                         setIsExpanded(!isExpanded);
                     }}
                 >
-                    <span className="text-black text-lg">See more...</span>
+                    <span className="text-black text-lg">
+                        {stringStore.messageBoard_txt_seeMore}
+                    </span>
                     <span className="inline-flex items-center justify-center ml-5 w-5 h-5 p-3 text-xl font-bold text-black bg-blue-400 rounded">
                         {numChildren}
                     </span>
@@ -94,17 +86,14 @@ const PostCard = ({
                         setIsExpanded(!isExpanded);
                     }}
                 >
-                    <span className="text-black text-lg">See less...</span>
+                    <span className="text-black text-lg">
+                        {stringStore.messageBoard_txt_seeLess}
+                    </span>
                 </div>
             )}
             {isExpanded && (
                 <div className="ml-10">
-                    <PostsList
-                        parentId={post.id}
-                        onAddReply={onAddReply}
-                        onUpvote={onUpvote}
-                        onDownvote={onDownvote}
-                    />
+                    <PostsList parentId={post.id} onAddReply={onAddReply} />
                 </div>
             )}
         </>

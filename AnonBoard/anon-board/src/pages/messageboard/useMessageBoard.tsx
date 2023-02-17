@@ -1,10 +1,12 @@
 import { AppStateContext } from '../../contexts/AppStateContext';
 import { useContext, useState } from 'react';
 import { Post } from '../../model/Post';
-import { createPost } from '../../services/PostsApi';
+import { createPost } from '../../services/apis/PostsApi';
+import { usePosts } from '../../hooks/usePosts';
 
 export const useMessageBoard = () => {
     const appState = useContext(AppStateContext);
+    const posts = usePosts();
     const [isCreatingNewPost, setIsCreatingNewPost] = useState(false);
     const toggleCreatePostForm = () => {
         setIsCreatingNewPost(!isCreatingNewPost);
@@ -24,19 +26,11 @@ export const useMessageBoard = () => {
         });
         setIsCreatingNewPost(false);
     };
-    const handleUpvote = (
-        postId: string,
-        onComplete?: (post: Post) => void
-    ) => {};
-    const handleDownvote = (
-        postId: string,
-        onComplete?: (post: Post) => void
-    ) => {};
+
     return {
+        posts,
         isCreatingNewPost,
         toggleCreatePostForm,
-        createPost: handleCreatePost,
-        upvote: handleUpvote,
-        downvote: handleDownvote
+        createPost: handleCreatePost
     };
 };

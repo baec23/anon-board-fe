@@ -5,14 +5,18 @@ import AnonBoardButton from '../../../components/AnonBoardButton';
 type CreatePostFormProps = {
     onSubmit: (message: string) => void;
     onCancel: () => void;
-    labelText?: string;
-    affirmativeButtonText?: string;
+    labelText: string;
+    placeholderText: string;
+    affirmativeButtonText: string;
+    cancelButtonText: string;
 };
 export const CreatePostForm = ({
     onSubmit,
     onCancel,
-    labelText = 'Message',
-    affirmativeButtonText = 'Submit'
+    labelText,
+    placeholderText,
+    affirmativeButtonText,
+    cancelButtonText
 }: CreatePostFormProps) => {
     const [message, setMessage] = useState('');
 
@@ -29,7 +33,7 @@ export const CreatePostForm = ({
                     id="message"
                     labelText={labelText}
                     value={message}
-                    placeholder="Message..."
+                    placeholder={placeholderText}
                     onInput={(e) => setMessage(e.currentTarget.value)}
                 />
                 <span className="flex justify-center mt-5 gap-20">
@@ -37,8 +41,15 @@ export const CreatePostForm = ({
                         text={affirmativeButtonText}
                         type="submit"
                         ariaLabel="Create New Post"
+                        color="blue-500"
+                        activeColor="blue-700"
                     />
-                    <AnonBoardButton text="Cancel" onClick={() => onCancel()} />
+                    <AnonBoardButton
+                        text={cancelButtonText}
+                        onClick={() => onCancel()}
+                        color="blue-500"
+                        activeColor="blue-700"
+                    />
                 </span>
             </form>
         </div>

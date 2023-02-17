@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Post } from '../model/Post';
-import { baseUrl } from '../services/PostsApi';
+import { baseUrl } from '../services/apis/PostsApi';
 
 export const usePosts = () => {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -17,6 +17,9 @@ export const usePosts = () => {
         eventSource.onmessage = (e) => {
             console.log('Event source got new message');
             setPosts(JSON.parse(e.data));
+        };
+        return () => {
+            eventSource.close();
         };
     }, [eventSourceHasError]);
 
