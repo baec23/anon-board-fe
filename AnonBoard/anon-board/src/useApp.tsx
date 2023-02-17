@@ -7,7 +7,6 @@ export type AppState = {
     selectedLanguage: 'EN' | 'KO';
 };
 export const useApp = () => {
-    const posts = usePosts();
     const [selectedLanguage, setSelectedLanguage] = useState<'EN' | 'KO'>('EN');
     const [appState, setAppState] = useState<AppState>({
         loggedInUserDisplayName: '',
@@ -33,16 +32,7 @@ export const useApp = () => {
         if (selectedLanguage === 'EN') newSelectedLanguage = 'KO';
         setSelectedLanguage(newSelectedLanguage);
     };
-    useEffect(() => {
-        setAppState((prevState) => {
-            return {
-                posts: posts,
-                loggedInUserDisplayName: prevState.loggedInUserDisplayName,
-                isLoggedIn: prevState.isLoggedIn,
-                selectedLanguage: prevState.selectedLanguage
-            };
-        });
-    }, [posts]);
+
     useEffect(() => {
         setAppState((prevState) => {
             return {
