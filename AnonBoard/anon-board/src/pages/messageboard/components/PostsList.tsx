@@ -1,21 +1,14 @@
 import React, { useContext } from 'react';
 import PostCard from './PostCard';
-import { PostsContext } from '../../contexts/PostsContext';
+import { PostsContext } from '../contexts/PostsContext';
 
 type PostsListProps = {
     onAddReply: (message: string, parentId?: string) => void;
-    onUpvote: (postId: string) => void;
-    onDownvote: (postId: string) => void;
     parentId?: string;
 };
-const PostsList = ({
-    parentId,
-    onAddReply,
-    onUpvote,
-    onDownvote
-}: PostsListProps) => {
-    const allPosts = useContext(PostsContext);
-    let displayedPosts = allPosts
+const PostsList = ({ parentId, onAddReply }: PostsListProps) => {
+    const posts = useContext(PostsContext);
+    let displayedPosts = posts
         .filter((post) => post.parentId == parentId)
         .sort((a, b) => {
             return b.createdTimestamp - a.createdTimestamp;
@@ -23,16 +16,11 @@ const PostsList = ({
 
     return (
         <div>
-            <ul>
+            <ul className="flex flex-col mt-4 gap-4">
                 {displayedPosts.map((post) => {
                     return (
                         <li key={post.id}>
-                            <PostCard
-                                post={post}
-                                onAddReply={onAddReply}
-                                onUpvote={onUpvote}
-                                onDownvote={onDownvote}
-                            />
+                            <PostCard post={post} onAddReply={onAddReply} />
                         </li>
                     );
                 })}

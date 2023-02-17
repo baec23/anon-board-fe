@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+export const baseUrl = 'http://anon-board.baec23.com:8080/anon-board-api/v1';
+
 const postsApi = axios.create({
-    baseURL: 'http://anon-board.baec23.com:8080/anon-board-api/v1'
+    baseURL: baseUrl
 });
 
 type CreatePostRequest = {
