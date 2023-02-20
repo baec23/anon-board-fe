@@ -9,7 +9,7 @@ type PostsListProps = {
 };
 const PostsList = ({ className, parentId, onAddReply }: PostsListProps) => {
     const posts = useContext(PostsContext);
-    let displayedPosts = posts
+    const displayedPosts = posts
         .filter((post) => post.parentId == parentId)
         .sort((a, b) => {
             return b.createdTimestamp - a.createdTimestamp;

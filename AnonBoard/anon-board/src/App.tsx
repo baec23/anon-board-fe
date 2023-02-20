@@ -15,14 +15,15 @@ function App() {
     const navigate = useNavigate();
     useEffect(() => {
         if (appState.isLoggedIn) {
-            navigate('/board');
+            navigate('/board', { replace: true });
         } else {
-            navigate('/login');
+            navigate('/login', { replace: true });
         }
     }, [appState.isLoggedIn]);
+
     return (
-        <StringStoreContext.Provider value={app.currStringStore}>
-            <AppStateContext.Provider value={appState}>
+        <AppStateContext.Provider value={appState}>
+            <StringStoreContext.Provider value={app.currStringStore}>
                 <div className="w-full px-5 pt-10 pb-20 flex flex-col items-center">
                     <div className="w-full flex flex-col max-w-4xl items-center">
                         <TopBar
@@ -49,8 +50,8 @@ function App() {
                         </AnimatePresence>
                     </div>
                 </div>
-            </AppStateContext.Provider>
-        </StringStoreContext.Provider>
+            </StringStoreContext.Provider>
+        </AppStateContext.Provider>
     );
 }
 

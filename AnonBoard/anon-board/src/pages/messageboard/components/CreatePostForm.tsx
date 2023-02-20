@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import LabelledTextArea from '../../../components/LabelledTextArea';
 import { AnonButton } from '../../../components/AnonButton';
 
@@ -21,15 +21,7 @@ export const CreatePostForm = ({
     cancelButtonText
 }: CreatePostFormProps) => {
     const [message, setMessage] = useState('');
-    const [isValid, setIsValid] = useState(false);
-
-    useEffect(() => {
-        if (message.length > 0) {
-            if (!isValid) setIsValid(true);
-        } else {
-            if (isValid) setIsValid(false);
-        }
-    }, [message]);
+    const isValid = message.length > 0;
 
     return (
         <div className={`${className} flex flex-col justify-center p-5`}>
