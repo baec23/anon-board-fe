@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LabelledTextArea from '../../../components/LabelledTextArea';
 import { AnonButton } from '../../../components/AnonButton';
 
@@ -21,6 +21,15 @@ export const CreatePostForm = ({
     cancelButtonText
 }: CreatePostFormProps) => {
     const [message, setMessage] = useState('');
+    const [isValid, setIsValid] = useState(false);
+
+    useEffect(() => {
+        if (message.length > 0) {
+            if (!isValid) setIsValid(true);
+        } else {
+            if (isValid) setIsValid(false);
+        }
+    }, [message]);
 
     return (
         <div className={`${className} flex flex-col justify-center p-5`}>
@@ -30,11 +39,14 @@ export const CreatePostForm = ({
                 labelText={labelText}
                 value={message}
                 placeholder={placeholderText}
-                onInput={(e) => setMessage(e.currentTarget.value)}
+                onInput={(e) => {
+                    setMessage(e.currentTarget.value);
+                }}
             />
             <span className="flex w-full justify-evenly mt-5">
                 <AnonButton
                     text={affirmativeButtonText}
+                    isEnabled={isValid}
                     onClick={() => onSubmit(message)}
                 />
                 <AnonButton text={cancelButtonText} onClick={onCancel} />
