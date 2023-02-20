@@ -41,6 +41,7 @@ const LabelledInputField = ({
             <AnimatePresence>
                 {errorMessage?.length > 0 && (
                     <motion.div
+                        key="error"
                         className="anon-error"
                         variants={scaleInOutVariants}
                         initial="hidden"

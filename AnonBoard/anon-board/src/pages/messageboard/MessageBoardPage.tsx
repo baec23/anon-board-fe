@@ -8,46 +8,58 @@ import { AnonButton } from '../../components/AnonButton';
 import { AnimatedVisibility } from '../../components/AnimatedVisibility';
 import { fadeInOutVariants } from '../../animations/fadeInOutVariants';
 import { LoadingSpinner } from '../../components/LoadingSpinner';
+import { motion } from 'framer-motion';
+import { pageVariants } from '../../animations/pageVariants';
 
 const MessageBoardPage = () => {
     const messageBoard = useMessageBoard();
     const stringStore = useContext(StringStoreContext);
     return (
         <PostsContext.Provider value={messageBoard.posts}>
-            <AnimatedVisibility
-                isVisible={!messageBoard.isLoading}
-                variants={fadeInOutVariants}
+            <motion.div
+                className=" "
+                variants={pageVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
             >
-                <div className="w-full flex justify-end">
-                    <AnonButton
-                        text={stringStore.messageBoard_btn_createNewPost}
-                        onClick={messageBoard.toggleCreatePostForm}
+                <AnimatedVisibility
+                    isVisible={!messageBoard.isLoading}
+                    variants={fadeInOutVariants}
+                >
+                    <div className="w-full flex justify-end">
+                        <AnonButton
+                            text={stringStore.messageBoard_btn_createNewPost}
+                            onClick={messageBoard.toggleCreatePostForm}
+                        />
+                    </div>
+                </AnimatedVisibility>
+
+                <AnimatedVisibility isVisible={messageBoard.isCreatingNewPost}>
+                    <CreatePostForm
+                        className="w-full"
+                        onSubmit={(message) => messageBoard.createPost(message)}
+                        onCancel={() => messageBoard.toggleCreatePostForm()}
+                        labelText={stringStore.messageBoard_lbl_createNewPost}
+                        placeholderText={
+                            stringStore.messageBoard_ph_createNewPost
+                        }
+                        affirmativeButtonText={stringStore.btn_create}
+                        cancelButtonText={stringStore.btn_cancel}
                     />
-                </div>
-            </AnimatedVisibility>
+                </AnimatedVisibility>
 
-            <AnimatedVisibility isVisible={messageBoard.isCreatingNewPost}>
-                <CreatePostForm
-                    className="w-full"
-                    onSubmit={(message) => messageBoard.createPost(message)}
-                    onCancel={() => messageBoard.toggleCreatePostForm()}
-                    labelText={stringStore.messageBoard_lbl_createNewPost}
-                    placeholderText={stringStore.messageBoard_ph_createNewPost}
-                    affirmativeButtonText={stringStore.btn_create}
-                    cancelButtonText={stringStore.btn_cancel}
-                />
-            </AnimatedVisibility>
+                <AnimatedVisibility isVisible={messageBoard.isLoading}>
+                    <LoadingSpinner className="w-full flex justify-center pt-16" />
+                </AnimatedVisibility>
 
-            <AnimatedVisibility isVisible={messageBoard.isLoading}>
-                <LoadingSpinner className="w-full flex justify-center pt-16" />
-            </AnimatedVisibility>
-
-            <AnimatedVisibility isVisible={!messageBoard.isLoading}>
-                <PostsList
-                    className="mt-5"
-                    onAddReply={messageBoard.createPost}
-                />
-            </AnimatedVisibility>
+                <AnimatedVisibility isVisible={!messageBoard.isLoading}>
+                    <PostsList
+                        className="mt-5"
+                        onAddReply={messageBoard.createPost}
+                    />
+                </AnimatedVisibility>
+            </motion.div>
         </PostsContext.Provider>
     );
 };

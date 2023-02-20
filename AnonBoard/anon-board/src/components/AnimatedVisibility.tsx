@@ -18,6 +18,7 @@ export const AnimatedVisibility = ({
         <AnimatePresence>
             {isVisible && (
                 <motion.div
+                    key="children"
                     className={`${className}`}
                     variants={variants}
                     initial="hidden"
