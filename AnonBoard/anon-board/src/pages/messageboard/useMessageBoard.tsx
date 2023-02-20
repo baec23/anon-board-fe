@@ -6,7 +6,8 @@ import { usePosts } from '../../hooks/usePosts';
 
 export const useMessageBoard = () => {
     const appState = useContext(AppStateContext);
-    const posts = usePosts();
+    const [posts, isLoading] = usePosts();
+
     const [isCreatingNewPost, setIsCreatingNewPost] = useState(false);
     const toggleCreatePostForm = () => {
         setIsCreatingNewPost(!isCreatingNewPost);
@@ -29,6 +30,7 @@ export const useMessageBoard = () => {
 
     return {
         posts,
+        isLoading,
         isCreatingNewPost,
         toggleCreatePostForm,
         createPost: handleCreatePost

@@ -5,6 +5,7 @@ import PostsList from './PostsList';
 import { CreatePostForm } from './CreatePostForm';
 import { StringStoreContext } from '../../../contexts/StringStoreContext';
 import { IconButton } from '../../../components/IconButton';
+import { AnimatedVisibility } from '../../../components/AnimatedVisibility';
 
 type PostCardProps = {
     post: Post;
@@ -41,7 +42,7 @@ const PostCard = ({ post, onAddReply }: PostCardProps) => {
                         />
                     </div>
                 </div>
-                {isReplying && (
+                <AnimatedVisibility isVisible={isReplying}>
                     <CreatePostForm
                         onSubmit={(message) => {
                             onAddReply(message, post.id);
@@ -54,7 +55,7 @@ const PostCard = ({ post, onAddReply }: PostCardProps) => {
                         affirmativeButtonText={stringStore.btn_addReply}
                         cancelButtonText={stringStore.btn_cancel}
                     />
-                )}
+                </AnimatedVisibility>
             </div>
             {!isExpanded && numChildren > 0 && (
                 <div
@@ -83,11 +84,13 @@ const PostCard = ({ post, onAddReply }: PostCardProps) => {
                     </span>
                 </div>
             )}
-            {isExpanded && (
-                <div className="ml-10">
-                    <PostsList parentId={post.id} onAddReply={onAddReply} />
-                </div>
-            )}
+            <AnimatedVisibility isVisible={isExpanded}>
+                <PostsList
+                    className="mt-5 ml-10"
+                    parentId={post.id}
+                    onAddReply={onAddReply}
+                />
+            </AnimatedVisibility>
         </>
     );
 };

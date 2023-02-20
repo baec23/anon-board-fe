@@ -3,10 +3,11 @@ import PostCard from './PostCard';
 import { PostsContext } from '../contexts/PostsContext';
 
 type PostsListProps = {
+    className?: string;
     onAddReply: (message: string, parentId?: string) => void;
     parentId?: string;
 };
-const PostsList = ({ parentId, onAddReply }: PostsListProps) => {
+const PostsList = ({ className, parentId, onAddReply }: PostsListProps) => {
     const posts = useContext(PostsContext);
     let displayedPosts = posts
         .filter((post) => post.parentId == parentId)
@@ -15,17 +16,15 @@ const PostsList = ({ parentId, onAddReply }: PostsListProps) => {
         });
 
     return (
-        <div>
-            <ul className="flex flex-col mt-4 gap-4">
-                {displayedPosts.map((post) => {
-                    return (
-                        <li key={post.id}>
-                            <PostCard post={post} onAddReply={onAddReply} />
-                        </li>
-                    );
-                })}
-            </ul>
-        </div>
+        <ul className={`${className} flex flex-col gap-4`}>
+            {displayedPosts.map((post) => {
+                return (
+                    <li key={post.id}>
+                        <PostCard post={post} onAddReply={onAddReply} />
+                    </li>
+                );
+            })}
+        </ul>
     );
 };
 

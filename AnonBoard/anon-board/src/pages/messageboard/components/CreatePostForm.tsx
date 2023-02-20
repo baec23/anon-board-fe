@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import LabelledTextArea from '../../../components/LabelledTextArea';
+import { AnonButton } from '../../../components/AnonButton';
 
 type CreatePostFormProps = {
+    className?: string;
     onSubmit: (message: string) => void;
     onCancel: () => void;
     labelText: string;
@@ -10,6 +12,7 @@ type CreatePostFormProps = {
     cancelButtonText: string;
 };
 export const CreatePostForm = ({
+    className = '',
     onSubmit,
     onCancel,
     labelText,
@@ -20,34 +23,22 @@ export const CreatePostForm = ({
     const [message, setMessage] = useState('');
 
     return (
-        <div className="flex justify-center">
-            <form
-                className="p-5 flex flex-col"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    onSubmit(message);
-                }}
-            >
-                <LabelledTextArea
-                    id="message"
-                    labelText={labelText}
-                    value={message}
-                    placeholder={placeholderText}
-                    onInput={(e) => setMessage(e.currentTarget.value)}
+        <div className={`${className} flex flex-col justify-center p-5`}>
+            <LabelledTextArea
+                className="w-full"
+                id="message"
+                labelText={labelText}
+                value={message}
+                placeholder={placeholderText}
+                onInput={(e) => setMessage(e.currentTarget.value)}
+            />
+            <span className="flex w-full justify-evenly mt-5">
+                <AnonButton
+                    text={affirmativeButtonText}
+                    onClick={() => onSubmit(message)}
                 />
-                <span className="flex justify-center mt-5 gap-20">
-                    <button
-                        className="anon-button-animated"
-                        type="submit"
-                        aria-label="Create New Post"
-                    >
-                        {affirmativeButtonText}
-                    </button>
-                    <button className="anon-button-animated" onClick={onCancel}>
-                        {cancelButtonText}
-                    </button>
-                </span>
-            </form>
+                <AnonButton text={cancelButtonText} onClick={onCancel} />
+            </span>
         </div>
     );
 };

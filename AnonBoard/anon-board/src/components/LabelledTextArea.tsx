@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { StringStoreContext } from '../contexts/StringStoreContext';
 
 type LabelledTextAreaProps = {
+    className?: string;
     id: string;
     labelText: string;
     value: string;
@@ -11,6 +12,7 @@ type LabelledTextAreaProps = {
     onInput: (e: React.FormEvent<HTMLTextAreaElement>) => void;
 };
 const LabelledTextArea = ({
+    className,
     id,
     labelText,
     value,
@@ -21,7 +23,7 @@ const LabelledTextArea = ({
 }: LabelledTextAreaProps) => {
     const stringStore = useContext(StringStoreContext);
     return (
-        <div>
+        <div className={`${className}`}>
             <label
                 htmlFor={id}
                 className="block text-sm font-medium text-neutral-dark"
@@ -29,10 +31,10 @@ const LabelledTextArea = ({
                 {labelText}
             </label>
             <textarea
+                className={`anon-input-field whitespace-pre-wrap resize-none`}
                 inputMode="text"
                 id={id}
                 rows={numRows}
-                className="anon-input-field whitespace-pre-wrap"
                 value={value}
                 required={required}
                 title={stringStore.tt_requiredForm}

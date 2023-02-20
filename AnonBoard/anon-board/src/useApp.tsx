@@ -1,5 +1,8 @@
 import { usePosts } from './hooks/usePosts';
 import { useEffect, useState } from 'react';
+import { StringStore } from './services/strings/StringStore';
+import { StringStore_en } from './services/strings/StringStore_en';
+import { StringStore_kr } from './services/strings/StringStore_kr';
 
 export type AppState = {
     loggedInUserDisplayName: string;
@@ -13,6 +16,21 @@ export const useApp = () => {
         isLoggedIn: false,
         selectedLanguage: selectedLanguage
     });
+
+    const [currStringStore, setCurrStringStore] =
+        useState<StringStore>(StringStore_en);
+    useEffect(() => {
+        switch (appState.selectedLanguage) {
+            case 'EN':
+                setCurrStringStore(StringStore_en);
+                break;
+            case 'KO':
+                setCurrStringStore(StringStore_kr);
+                break;
+            default:
+                setCurrStringStore(StringStore_en);
+        }
+    }, [appState.selectedLanguage]);
     const login = (username: string) => {
         setAppState({
             loggedInUserDisplayName: username,
@@ -43,5 +61,5 @@ export const useApp = () => {
         });
     }, [selectedLanguage]);
 
-    return { appState, login, logout, toggleSelectedLanguage };
+    return { appState, currStringStore, login, logout, toggleSelectedLanguage };
 };
