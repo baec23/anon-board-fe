@@ -23,8 +23,8 @@ function App() {
     return (
         <StringStoreContext.Provider value={app.currStringStore}>
             <AppStateContext.Provider value={appState}>
-                <div className="w-full px-5 pt-10 pb-20">
-                    <div className="w-full max-w-4xl">
+                <div className="w-full px-5 pt-10 pb-20 flex flex-col items-center">
+                    <div className="w-full flex flex-col max-w-4xl items-center">
                         <TopBar
                             onLogout={app.logout}
                             onToggleLanguage={app.toggleSelectedLanguage}
