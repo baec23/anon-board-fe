@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Post } from '../model/Post';
-import { baseUrl } from '../services/apis/PostsApi';
-import { delay } from 'framer-motion';
+import { Post } from '../../../model/Post';
+import { baseUrl } from '../../../services/apis/PostsApi';
 
 export const usePosts = () => {
     const [isLoading, setIsLoading] = useState(true);

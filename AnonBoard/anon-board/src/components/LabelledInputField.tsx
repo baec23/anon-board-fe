@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useContext } from 'react';
 import { StringStoreContext } from '../contexts/StringStoreContext';
+import { scaleInOutVariants } from '../animations/scaleInVariants';
 
 type LabelledInputFieldProps = {
     id: string;
@@ -22,30 +23,6 @@ const LabelledInputField = ({
 }: LabelledInputFieldProps) => {
     const stringStore = useContext(StringStoreContext);
 
-    const errorVariants = {
-        hidden: {
-            opacity: 0,
-            scaleY: 0,
-            height: 0
-        },
-        visible: {
-            opacity: 1,
-            scaleY: 1,
-            height: 'auto',
-            transition: {
-                duration: 0.25
-            }
-        },
-        exit: {
-            opacity: 0,
-            scaleY: 0,
-            height: 0,
-            transition: {
-                duration: 0.15
-            }
-        }
-    };
-
     return (
         <div className="flex flex-col">
             <label className="anon-label" htmlFor={id}>
@@ -65,7 +42,7 @@ const LabelledInputField = ({
                 {errorMessage?.length > 0 && (
                     <motion.div
                         className="anon-error"
-                        variants={errorVariants}
+                        variants={scaleInOutVariants}
                         initial="hidden"
                         animate="visible"
                         exit="exit"

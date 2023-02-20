@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StringStoreContext } from '../../contexts/StringStoreContext';
 import { isStringAlphaNumeric } from '../../util/InputFilter';
 
@@ -8,21 +8,22 @@ export const useLogin = () => {
     const [hasError, setHasError] = useState<boolean>(false);
     const stringStore = useContext(StringStoreContext);
 
-    const errorMessage = useMemo(() => {
-        if (hasError) return stringStore.txt_alphaNumericError;
-        else return '';
-    }, [hasError]);
-
-    const errorVisibility = useMemo<'init' | 'visible' | 'invisible'>(() => {
-        if (hasError) return 'visible';
-        else return 'invisible';
-    }, [hasError]);
+    const [errorMessage, setErrorMessage] = useState('');
+    useEffect(() => {
+        if (hasError) setErrorMessage(stringStore.txt_alphaNumericError);
+    }, [stringStore]);
 
     useEffect(() => {
         if (username.length > 0 && !isStringAlphaNumeric(username)) {
-            if (!hasError) setHasError(true);
+            if (!hasError) {
+                setHasError(true);
+                setErrorMessage(stringStore.txt_alphaNumericError);
+            }
         } else {
-            if (hasError) setHasError(false);
+            if (hasError) {
+                setHasError(false);
+                setErrorMessage('');
+            }
         }
         if (username.length <= 0 || !isStringAlphaNumeric(username)) {
             if (isFormValid) setIsFormValid(false);
@@ -35,7 +36,6 @@ export const useLogin = () => {
         setUsername,
         stringStore,
         isFormValid,
-        errorMessage,
-        errorVisibility
+        errorMessage
     };
 };

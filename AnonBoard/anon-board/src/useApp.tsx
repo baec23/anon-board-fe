@@ -1,4 +1,3 @@
-import { usePosts } from './hooks/usePosts';
 import { useEffect, useState } from 'react';
 import { StringStore } from './services/strings/StringStore';
 import { StringStore_en } from './services/strings/StringStore_en';

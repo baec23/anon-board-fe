@@ -2,7 +2,7 @@ import { AppStateContext } from '../../contexts/AppStateContext';
 import { useContext, useState } from 'react';
 import { Post } from '../../model/Post';
 import { createPost } from '../../services/apis/PostsApi';
-import { usePosts } from '../../hooks/usePosts';
+import { usePosts } from './hooks/usePosts';
 
 export const useMessageBoard = () => {
     const appState = useContext(AppStateContext);

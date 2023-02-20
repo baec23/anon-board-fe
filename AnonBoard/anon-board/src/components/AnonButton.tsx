@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import React from 'react';
+import { buttonVariants } from '../animations/buttonVariants';
 
 type AnonButtonProps = {
     className?: string;
@@ -13,29 +14,6 @@ export const AnonButton = ({
     isEnabled = true,
     onClick
 }: AnonButtonProps) => {
-    const buttonVariants = {
-        disabled: {
-            filter: 'grayscale(100%)',
-            opacity: 0.5,
-            transition: {
-                duration: 0.1
-            }
-        },
-        enabled: {
-            filter: 'grayscale(0%)',
-            opacity: 1,
-            transition: {
-                duration: 0.1
-            }
-        },
-        clicked: {
-            scale: 0.9
-        },
-        hover: {
-            scale: 1.05
-        }
-    };
-
     return (
         <motion.div
             className={`${className} anon-button`}
